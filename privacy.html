@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Политика конфиденциальности — Ajournal</title>
+<meta name="description" content="Какие данные хранит Ajournal, зачем и как их удалить.">
+<style>
+  :root {
+    --bg: #0e0e12;
+    --panel: #15151b;
+    --line: #26262f;
+    --text: #e8e8ee;
+    --muted: #a0a0ae;
+    --accent: #2bb5a0;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 20px 72px; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .back { display: inline-block; margin-bottom: 32px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; }
+  .updated { color: var(--muted); margin: 0 0 40px; }
+  h2 { font-size: 1.2rem; margin: 40px 0 8px; padding-top: 24px; border-top: 1px solid var(--line); }
+  p, ul { margin: 0 0 14px; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .contact {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  footer { margin-top: 48px; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← На главную</a>
+
+  <h1>Политика конфиденциальности</h1>
+  <p class="updated">Ajournal (Trading Journal). Обновлено: 17 октября 2026.</p>
+
+  <p>Ajournal — приложение для учёта торговых сделок. Здесь коротко и без юридического тумана написано, какие данные мы храним, зачем и как их удалить. Владелец и оператор данных: hsrteer.</p>
+
+  <h2>Какие данные мы храним</h2>
+  <ul>
+    <li><strong>Данные аккаунта:</strong> адрес электронной почты, имя пользователя и пароль. Пароль хранится у провайдера входа в защищённом виде, мы его не видим.</li>
+    <li><strong>Ваши сделки:</strong> всё, что вы вносите в журнал вручную или через распознавание скриншота.</li>
+    <li><strong>Скриншоты сделок:</strong> изображения, которые вы загружаете в приложение.</li>
+  </ul>
+  <p>Мы не просим документы, данные банковских карт или пароли от брокеров и торговых платформ.</p>
+
+  <h2>Зачем нужны эти данные</h2>
+  <p>Только для работы приложения: вход в аккаунт, показ ваших сделок, календаря и статистики, распознавание сделок по скриншоту. Мы не продаём ваши данные и не используем их для рекламы.</p>
+
+  <h2>Распознавание скриншотов и Google Gemini</h2>
+  <p>Когда вы нажимаете распознавание сделки по скриншоту, это изображение отправляется в сервис Google Gemini, который читает его и возвращает данные сделки. Изображение отправляется только в этот момент и только для этой функции. Если вы не пользуетесь распознаванием, скриншоты в Google не уходят. На обработку данных в Google распространяются условия и политика конфиденциальности Google.</p>
+
+  <h2>Где хранятся данные и кто к ним имеет доступ</h2>
+  <ul>
+    <li>Аккаунты, сделки и скриншоты хранятся в облачном сервисе Supabase. Серверы провайдеров могут находиться в других странах.</li>
+    <li>Каждый пользователь видит только свои сделки и свои скриншоты: доступ ограничен правилами на уровне базы данных, а файлы лежат в закрытом хранилище.</li>
+    <li>Сайт размещён на GitHub Pages. Как и любой сайт, он получает технические данные посетителей (например, IP-адрес), которые обрабатывает GitHub.</li>
+  </ul>
+
+  <h2>Сколько данные хранятся</h2>
+  <p>Пока у вас есть аккаунт. После удаления аккаунта мы удаляем ваши сделки и скриншоты.</p>
+
+  <h2>Ваши права</h2>
+  <p>Вы можете в любой момент попросить:</p>
+  <ul>
+    <li>показать, какие данные о вас хранятся;</li>
+    <li>исправить неверные данные;</li>
+    <li>удалить аккаунт со всеми сделками и скриншотами.</li>
+  </ul>
+  <p>Напишите нам на почту ниже, ответим в течение 30 дней. Укажите адрес, с которым вы зарегистрированы, чтобы мы нашли ваш аккаунт.</p>
+
+  <div class="contact">
+    <strong>Контакт по вопросам данных:</strong><br>
+    <a href="mailto:ihortrj@gmail.com">ihortrj@gmail.com</a>
+  </div>
+
+  <h2>Возраст</h2>
+  <p>Приложение не предназначено для лиц младше 18 лет.</p>
+
+  <h2>Изменения</h2>
+  <p>Если мы изменим эту политику, новая версия появится на этой странице с новой датой обновления.</p>
+
+  <footer>© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены.</footer>
+</main>
+</body>
+</html>
