@@ -3,500 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trading Journal — журнал сделок для трейдеров</title>
+<title>Ajournal / Trading Journal — журнал сделок для трейдеров</title>
+<meta name="description" content="Ajournal — бесплатный журнал сделок для трейдеров. Загрузите скриншот сделки, и приложение само заполнит журнал и посчитает статистику.">
 <style>
   :root {
     --bg: #0B0D10;
-    --surface: #12151A;
-    --surface-2: #181C22;
-    --border: #232830;
     --text: #E8EAED;
-    --text-dim: #838A96;
+    --text-dim: #9AA1AD;
+    --text-soft: #B4BAC5;
     --bull: #26A69A;
-    --bear: #EF5350;
-    --mono: 'SF Mono', 'Consolas', 'JetBrains Mono', monospace;
-    --display: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    --bull-soft: #7FD6CC;
+    --bull-bright: #4DD0C4;
+    --ink: #06110F;
+    --glass: rgba(255,255,255,0.06);
+    --glass-line: rgba(255,255,255,0.12);
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--display);
-    line-height: 1.5;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
+  .page { position: relative; overflow: hidden; }
+  .glow { position: absolute; border-radius: 50%; pointer-events: none; }
+  .glow.one { top: -160px; left: 58%; width: 560px; height: 560px; background: radial-gradient(circle, rgba(38,166,154,0.38), transparent 68%); }
+  .glow.two { top: 720px; left: -180px; width: 480px; height: 480px; background: radial-gradient(circle, rgba(38,166,154,0.2), transparent 68%); }
+  .wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 32px; }
 
-  /* ---------- Ticker bar (signature element) ---------- */
-  .ticker {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    padding: 10px 0;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-    overflow: hidden;
-    font-family: var(--mono);
-    font-size: 13px;
+  .g {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid var(--glass-line);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 24px 48px rgba(0,0,0,0.35);
   }
-  .ticker-track {
-    display: flex;
-    gap: 28px;
-    animation: scroll 28s linear infinite;
-  }
-  .ticker span { color: var(--text-dim); }
-  .ticker .up { color: var(--bull); }
-  .ticker .down { color: var(--bear); }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .g { background: #15191F; }
   }
 
-  /* ---------- Nav ---------- */
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 6vw;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .logo { font-weight: 700; font-size: 18px; letter-spacing: 0.3px; }
+  /* nav */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; }
+  .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.3px; }
   .logo .dot { color: var(--bull); }
-  nav .links { display: flex; gap: 32px; font-size: 14px; color: var(--text-dim); }
-  nav .links a:hover { color: var(--text); }
-  .lang-switch { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px; }
+  .lang-switch { display: flex; gap: 4px; padding: 5px; border-radius: 999px; }
   .lang-switch button {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-dim);
-    background: none;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    font-family: inherit; font-size: 13px; font-weight: 800; color: var(--text-soft);
+    background: none; border: none; padding: 8px 14px; border-radius: 999px; cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
   }
   .lang-switch button:hover { color: var(--text); }
-  .lang-switch button.active { background: var(--bull); color: #06110F; }
+  .lang-switch button.active { background: var(--bull); color: var(--ink); }
 
-  /* ---------- Hero ---------- */
-  .hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 70px 6vw 40px;
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--bull);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-  }
-  h1 {
-    font-size: clamp(34px, 4.2vw, 54px);
-    line-height: 1.08;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  h1 .accent { color: var(--bull); }
-  .lede {
-    margin-top: 22px;
-    font-size: 17px;
-    color: var(--text-dim);
-    max-width: 480px;
-  }
-  .cta-row { margin-top: 34px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  /* hero */
+  .hero { padding: 72px 0 64px; max-width: 900px; }
+  .eyebrow { color: var(--bull-soft); font-size: 14px; font-weight: 600; }
+  h1 { margin-top: 18px; font-size: clamp(44px, 7vw, 84px); line-height: 1; font-weight: 800; letter-spacing: -0.04em; }
+  .lede { margin-top: 26px; max-width: 560px; font-size: 20px; line-height: 1.55; color: var(--text-dim); }
+  .cta-row { margin-top: 34px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bull);
-    color: #06110F;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 14px 26px;
-    border-radius: 8px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: inline-block; background: var(--bull); color: var(--ink); font-weight: 800; font-size: 16px;
+    padding: 17px 32px; border-radius: 999px; box-shadow: 0 12px 32px rgba(38,166,154,0.45);
+    transition: transform 0.15s ease;
   }
-  .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -8px rgba(38,166,154,0.5); }
-  .btn svg { width: 18px; height: 18px; }
-  .btn-note { font-size: 13px; color: var(--text-dim); font-family: var(--mono); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-note { font-size: 13px; color: var(--text-dim); }
 
-  /* ---------- Chart mock (signature visual) ---------- */
-  .chart-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .chart-head {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-  }
-  .chart-head .pnl { color: var(--bull); font-weight: 700; }
-  .candles {
-    display: flex;
-    align-items: flex-end;
-    gap: 5px;
-    height: 160px;
-    border-bottom: 1px dashed var(--border);
-    padding-bottom: 4px;
-  }
-  .candle { flex: 1; border-radius: 2px; opacity: 0; animation: rise 0.6s ease forwards; }
-  .candle.bull { background: var(--bull); }
-  .candle.bear { background: var(--bear); }
-  @keyframes rise {
-    from { transform: scaleY(0); opacity: 0; }
-    to { transform: scaleY(1); opacity: 1; }
-  }
-  .chart-foot {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 14px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
-  }
-  .win-badge { color: var(--bull); }
+  /* bento */
+  .bento { display: grid; grid-template-columns: 1.4fr 1fr; grid-auto-rows: minmax(250px, auto); gap: 20px; }
+  .tile { border-radius: 36px; padding: 36px; }
+  .tile.tall { grid-row: span 2; }
+  .tag { color: var(--bull-soft); font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; gap: 12px; }
+  .tag .sample { color: var(--text-dim); font-weight: 400; }
+  .tile h3 { margin-top: 10px; font-size: 24px; letter-spacing: -0.02em; }
+  .tile.tall h3 { font-size: 30px; margin-bottom: 26px; }
+  .tile p { margin-top: 10px; color: var(--text-dim); line-height: 1.6; }
+  .rows { border-radius: 22px; background: rgba(0,0,0,0.3); padding: 8px 22px; font-size: 15px; }
+  .row { display: flex; justify-content: space-between; padding: 12px 0; }
+  .row + .row { border-top: 1px solid rgba(255,255,255,0.08); }
+  .row span:first-child { color: var(--text-dim); }
+  .row .win { color: var(--bull-bright); font-weight: 800; }
+  .stat { display: flex; flex-direction: column; justify-content: space-between; }
+  .stat-body { display: flex; align-items: center; gap: 20px; }
+  .ring { width: 96px; height: 96px; border-radius: 50%; background: conic-gradient(var(--bull) 0 64%, rgba(255,255,255,0.12) 64% 100%); display: flex; align-items: center; justify-content: center; flex: none; }
+  .ring div { width: 72px; height: 72px; border-radius: 50%; background: #14181D; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; }
+  .stat-note { color: var(--text-dim); font-size: 14px; line-height: 1.5; }
 
-  /* ---------- Sections ---------- */
-  section { max-width: 1200px; margin: 0 auto; padding: 90px 6vw; }
-  .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
-  .section-head .eyebrow { text-align: center; }
-  .section-head h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 700; }
-  .section-head p { margin-top: 14px; color: var(--text-dim); font-size: 16px; }
+  /* download */
+  .dl { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin: 20px 0 96px; }
+  .dl-main { border-radius: 36px; padding: 44px; background: var(--bull); color: var(--ink); }
+  .dl-main h2 { font-size: clamp(28px, 4vw, 38px); letter-spacing: -0.03em; line-height: 1.1; }
+  .dl-main p { margin: 10px 0 26px; }
+  .dl-main .dl-btn { display: inline-block; background: var(--ink); color: #fff; font-weight: 800; padding: 16px 30px; border-radius: 999px; transition: transform 0.15s ease; }
+  .dl-main .dl-btn:hover { transform: translateY(-1px); }
 
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  .feature {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px 24px;
-  }
-  .feature .num { font-family: var(--mono); color: var(--bull); font-size: 13px; margin-bottom: 14px; }
-  .feature h3 { font-size: 18px; margin-bottom: 10px; }
-  .feature p { color: var(--text-dim); font-size: 14.5px; }
-
-  /* ---------- Platforms ---------- */
-  .platforms {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .platform-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 30px 24px;
-    text-align: center;
-  }
-  .platform-card .icon { font-size: 28px; margin-bottom: 14px; }
-  .platform-card h4 { font-size: 16px; margin-bottom: 6px; }
-  .platform-card p { color: var(--text-dim); font-size: 13.5px; margin-bottom: 18px; }
-  .platform-card .btn-small {
-    display: inline-block;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px 18px;
-    border-radius: 7px;
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
-  .platform-card.primary { border-color: var(--bull); }
-  .platform-card.primary .btn-small { background: var(--bull); color: #06110F; border: none; }
-
-  /* ---------- Download ---------- */
-  .download-box {
-    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 56px 40px;
-    text-align: center;
-  }
-  .download-box h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 12px; }
-  .download-box p { color: var(--text-dim); margin-bottom: 28px; }
-  .req { margin-top: 26px; font-family: var(--mono); font-size: 12.5px; color: var(--text-dim); }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 6vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-dim);
-    font-size: 13px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  footer { display: flex; justify-content: space-between; gap: 16px; padding: 0 0 40px; font-size: 13px; color: var(--text-dim); }
   footer a { text-decoration: underline; text-underline-offset: 3px; }
   footer a:hover { color: var(--text); }
 
+  :focus-visible { outline: 2px solid var(--bull-bright); outline-offset: 3px; }
+
   @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; }
-    .grid3 { grid-template-columns: 1fr; }
-    .platforms { grid-template-columns: 1fr; }
-    nav .links { display: none; }
-    footer { flex-direction: column; gap: 10px; text-align: center; }
+    .bento, .dl { grid-template-columns: 1fr; }
+    .tile.tall { grid-row: auto; }
+    .tile, .dl-main { padding: 28px; border-radius: 28px; }
+    .hero { padding-top: 40px; }
+    footer { flex-direction: column; text-align: center; }
+    .wrap { padding: 0 20px; }
   }
-
   @media (prefers-reduced-motion: reduce) {
-    .ticker-track { animation: none; }
-    .candle { animation: none; opacity: 1; }
+    html { scroll-behavior: auto; }
+    .btn, .dl-btn, .lang-switch button { transition: none; }
   }
-
-  :focus-visible { outline: 2px solid var(--bull); outline-offset: 2px; }
 </style>
 </head>
 <body>
+<div class="page">
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+  <div class="wrap">
 
-  <div class="ticker">
-    <div class="ticker-track">
-      <span>EUR/USD <span class="up">▲ 1.0842</span></span>
-      <span>BTC/USD <span class="down">▼ 61,204</span></span>
-      <span>XAUUSD <span class="up">▲ 4,239.12</span></span>
-      <span>NAS100 <span class="up">▲ 18,902</span></span>
-      <span>GBP/USD <span class="down">▼ 1.2611</span></span>
-      <span>ETH/USDT <span class="up">▲ 3,081</span></span>
-      <span>EUR/USD <span class="up">▲ 1.0842</span></span>
-      <span>BTC/USD <span class="down">▼ 61,204</span></span>
-      <span>XAUUSD <span class="up">▲ 4,239.12</span></span>
-      <span>NAS100 <span class="up">▲ 18,902</span></span>
-      <span>GBP/USD <span class="down">▼ 1.2611</span></span>
-      <span>ETH/USDT <span class="up">▲ 3,081</span></span>
-    </div>
-  </div>
+    <nav>
+      <div class="logo">Ajournal<span class="dot">.</span></div>
+      <div class="lang-switch g" role="group" aria-label="Language">
+        <button data-lang="ru" class="active">RU</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="es">ES</button>
+      </div>
+    </nav>
 
-  <nav>
-    <div class="logo">Trading<span class="dot">·</span>Journal</div>
-    <div class="links">
-      <a href="#features" data-i18n="nav.features">Возможности</a>
-      <a href="#platforms" data-i18n="nav.platforms">Платформы</a>
-      <a href="#download" data-i18n="nav.download">Скачать</a>
-    </div>
-    <div class="lang-switch">
-      <button data-lang="ru" class="active">RU</button>
-      <button data-lang="en">EN</button>
-      <button data-lang="es">ES</button>
-    </div>
-  </nav>
-
-  <div class="hero">
-    <div>
-      <div class="eyebrow" data-i18n="hero.eyebrow">// автоматизированная система учёта сделок</div>
-      <h1 data-i18n-html="hero.h1">Загрузите скриншот сделки — получите готовую <span class="accent">статистику</span>.</h1>
-      <p class="lede" data-i18n="hero.lede">Приложение распознаёт данные со скриншотов TradingView, MetaTrader и брокерских платформ с помощью искусственного интеллекта и автоматически формирует статистику по вашим сделкам.</p>
+    <header class="hero">
+      <div class="eyebrow" data-i18n="hero.eyebrow">Журнал сделок</div>
+      <h1 data-i18n="hero.h1">Скриншот в журнал. За секунды.</h1>
+      <p class="lede" data-i18n="hero.lede">Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.</p>
       <div class="cta-row">
-        <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.2/Trading.Journal.Setup.1.0.2.exe">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v13m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
-          <span data-i18n="hero.cta">Скачать для Windows</span>
-        </a>
-        <span class="btn-note" data-i18n="hero.ctaNote">Версия 1.0 · Бесплатно</span>
+        <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.2/Trading.Journal.Setup.1.0.2.exe" data-i18n="cta">Скачать для Windows</a>
+        <span class="btn-note" data-i18n="hero.note">Бесплатно · Windows 10/11 · 64-bit</span>
       </div>
-    </div>
+    </header>
 
-    <div class="chart-card">
-      <div class="chart-head">
-        <span data-i18n="chart.pair">XAUUSD · Покупка</span>
-        <span class="pnl">+1,216.00 $</span>
+    <main>
+      <div class="bento" id="features">
+        <div class="tile tall g">
+          <div class="tag"><span data-i18n="f1.tag">Распознавание</span><span class="sample" data-i18n="sample">Пример</span></div>
+          <h3 data-i18n="f1.title">ИИ заполняет сделку за вас</h3>
+          <div class="rows">
+            <div class="row"><span data-i18n="row.instrument">Инструмент</span><span>XAUUSD</span></div>
+            <div class="row"><span data-i18n="row.direction">Направление</span><span data-i18n="row.buy">Покупка</span></div>
+            <div class="row"><span data-i18n="row.result">Результат</span><span class="win">+1 216,00 $</span></div>
+            <div class="row"><span data-i18n="row.source">Источник</span><span data-i18n="row.screenshot">Скриншот</span></div>
+          </div>
+        </div>
+        <div class="tile g stat">
+          <div>
+            <div class="tag"><span data-i18n="f2.tag">Статистика</span><span class="sample" data-i18n="sample2">Пример</span></div>
+            <h3 data-i18n="f2.title">Винрейт и график по дням</h3>
+          </div>
+          <div class="stat-body">
+            <div class="ring"><div>64%</div></div>
+            <span class="stat-note" data-i18n="f2.note">считается сам с каждой сделкой</span>
+          </div>
+        </div>
+        <div class="tile g">
+          <div class="tag"><span data-i18n="f3.tag">Аккаунт</span></div>
+          <h3 data-i18n="f3.title">Всё в одном месте</h3>
+          <p data-i18n="f3.desc">Сделки хранятся в личном аккаунте и не теряются при переустановке.</p>
+        </div>
       </div>
-      <div class="candles" id="candles"></div>
-      <div class="chart-foot">
-        <span data-i18n="chart.winrate">Винрейт: 64%</span>
-        <span class="win-badge" data-i18n="chart.recognized">● Распознано ИИ за 2.1 с</span>
+
+      <div class="dl" id="download">
+        <div class="dl-main">
+          <h2 data-i18n="dl.title">Начните вести журнал</h2>
+          <p data-i18n="dl.sub">Бесплатно. Windows 10/11 · 64-bit.</p>
+          <a class="dl-btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.2/Trading.Journal.Setup.1.0.2.exe" data-i18n="cta">Скачать для Windows</a>
+        </div>
+        <div class="tile g">
+          <div class="tag"><span data-i18n="soon.tag">Скоро</span></div>
+          <h3 data-i18n="soon.title">iOS, Android и браузер</h3>
+          <p data-i18n="soon.desc">Один аккаунт на всех устройствах.</p>
+        </div>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <div data-i18n-html="footer.copyright">© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a></div>
+      <div data-i18n="footer.tagline">Программное обеспечение для системного учёта торговых операций</div>
+    </footer>
+
   </div>
+</div>
 
-  <section id="features">
-    <div class="section-head">
-      <div class="eyebrow" data-i18n="features.eyebrow">возможности</div>
-      <h2 data-i18n="features.title">Инструменты для системного учёта сделок</h2>
-      <p data-i18n="features.subtitle">Меньше времени на ручной ввод данных — больше внимания анализу торговых решений.</p>
-    </div>
-    <div class="grid3">
-      <div class="feature">
-        <div class="num">01</div>
-        <h3 data-i18n="features.f1.title">Распознавание скриншотов</h3>
-        <p data-i18n="features.f1.desc">Искусственный интеллект автоматически определяет инструмент, цену входа и выхода, объём и финансовый результат сделки. Перед сохранением данные можно скорректировать.</p>
-      </div>
-      <div class="feature">
-        <div class="num">02</div>
-        <h3 data-i18n="features.f2.title">Автоматическая статистика</h3>
-        <p data-i18n="features.f2.desc">Винрейт, совокупный результат, количество прибыльных и убыточных сделок, график доходности по дням — рассчитывается автоматически при добавлении каждой сделки.</p>
-      </div>
-      <div class="feature">
-        <div class="num">03</div>
-        <h3 data-i18n="features.f3.title">Синхронизация между устройствами</h3>
-        <p data-i18n="features.f3.desc">Единый аккаунт для мобильного приложения, компьютера и браузера. Данные обновляются на всех устройствах одновременно.</p>
-      </div>
-    </div>
-  </section>
+<script>
+  const LANG = {
+    ru: {
+      'hero.eyebrow': 'Журнал сделок',
+      'hero.h1': 'Скриншот в журнал. За секунды.',
+      'hero.lede': 'Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.',
+      'cta': 'Скачать для Windows',
+      'hero.note': 'Бесплатно · Windows 10/11 · 64-bit',
+      'f1.tag': 'Распознавание', 'sample': 'Пример', 'sample2': 'Пример',
+      'f1.title': 'ИИ заполняет сделку за вас',
+      'row.instrument': 'Инструмент', 'row.direction': 'Направление', 'row.buy': 'Покупка', 'row.result': 'Результат', 'row.source': 'Источник', 'row.screenshot': 'Скриншот',
+      'f2.tag': 'Статистика', 'f2.title': 'Винрейт и график по дням', 'f2.note': 'считается сам с каждой сделкой',
+      'f3.tag': 'Аккаунт', 'f3.title': 'Всё в одном месте', 'f3.desc': 'Сделки хранятся в личном аккаунте и не теряются при переустановке.',
+      'dl.title': 'Начните вести журнал', 'dl.sub': 'Бесплатно. Windows 10/11 · 64-bit.',
+      'soon.tag': 'Скоро', 'soon.title': 'iOS, Android и браузер', 'soon.desc': 'Один аккаунт на всех устройствах.',
+      'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a>',
+      'footer.tagline': 'Программное обеспечение для системного учёта торговых операций',
+    },
+    en: {
+      'hero.eyebrow': 'Trade journal',
+      'hero.h1': 'Screenshot to journal. In seconds.',
+      'hero.lede': 'Ajournal reads the trade from your screenshot and shows how you really trade.',
+      'cta': 'Download for Windows',
+      'hero.note': 'Free · Windows 10/11 · 64-bit',
+      'f1.tag': 'Recognition', 'sample': 'Example', 'sample2': 'Example',
+      'f1.title': 'AI fills in the trade for you',
+      'row.instrument': 'Instrument', 'row.direction': 'Direction', 'row.buy': 'Buy', 'row.result': 'Result', 'row.source': 'Source', 'row.screenshot': 'Screenshot',
+      'f2.tag': 'Statistics', 'f2.title': 'Win rate and daily chart', 'f2.note': 'calculated automatically with every trade',
+      'f3.tag': 'Account', 'f3.title': 'Everything in one place', 'f3.desc': 'Your trades are stored in a personal account and are not lost when you reinstall.',
+      'dl.title': 'Start journaling', 'dl.sub': 'Free. Windows 10/11 · 64-bit.',
+      'soon.tag': 'Coming soon', 'soon.title': 'iOS, Android and browser', 'soon.desc': 'One account on all your devices.',
+      'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. All rights reserved. <a href="privacy.html">Privacy Policy</a>',
+      'footer.tagline': 'Software for systematic trading record-keeping',
+    },
+    es: {
+      'hero.eyebrow': 'Diario de operaciones',
+      'hero.h1': 'De la captura al diario. En segundos.',
+      'hero.lede': 'Ajournal lee la operación de tu captura y muestra cómo operas en realidad.',
+      'cta': 'Descargar para Windows',
+      'hero.note': 'Gratis · Windows 10/11 · 64 bits',
+      'f1.tag': 'Reconocimiento', 'sample': 'Ejemplo', 'sample2': 'Ejemplo',
+      'f1.title': 'La IA rellena la operación por ti',
+      'row.instrument': 'Instrumento', 'row.direction': 'Dirección', 'row.buy': 'Compra', 'row.result': 'Resultado', 'row.source': 'Origen', 'row.screenshot': 'Captura',
+      'f2.tag': 'Estadísticas', 'f2.title': 'Winrate y gráfico diario', 'f2.note': 'se calcula solo con cada operación',
+      'f3.tag': 'Cuenta', 'f3.title': 'Todo en un solo lugar', 'f3.desc': 'Tus operaciones se guardan en una cuenta personal y no se pierden al reinstalar.',
+      'dl.title': 'Empieza a registrar', 'dl.sub': 'Gratis. Windows 10/11 · 64 bits.',
+      'soon.tag': 'Próximamente', 'soon.title': 'iOS, Android y navegador', 'soon.desc': 'Una sola cuenta en todos tus dispositivos.',
+      'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Todos los derechos reservados. <a href="privacy.html">Política de privacidad</a>',
+      'footer.tagline': 'Software para el registro sistemático de operaciones de trading',
+    },
+  };
 
-  <section id="platforms">
-    <div class="section-head">
-      <div class="eyebrow" data-i18n="platforms.eyebrow">платформы</div>
-      <h2 data-i18n="platforms.title">Единый аккаунт для всех устройств</h2>
-    </div>
-    <div class="platforms">
-      <div class="platform-card primary">
-        <div class="icon">🖥️</div>
-        <h4 data-i18n="platforms.windows.title">Windows</h4>
-        <p data-i18n="platforms.windows.desc">Установочный файл для настольных компьютеров</p>
-        <a class="btn-small" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.2/Trading.Journal.Setup.1.0.2.exe" data-i18n="platforms.windows.cta">Скачать .exe</a>
-      </div>
-      <div class="platform-card">
-        <div class="icon">📱</div>
-        <h4 data-i18n="platforms.mobile.title">iOS и Android</h4>
-        <p data-i18n="platforms.mobile.desc">Мобильное приложение для добавления сделок</p>
-        <a class="btn-small" href="#download" data-i18n="platforms.mobile.cta">Скоро в App Store</a>
-      </div>
-      <div class="platform-card">
-        <div class="icon">🌐</div>
-        <h4 data-i18n="platforms.web.title">Браузер</h4>
-        <p data-i18n="platforms.web.desc">Работает без установки</p>
-        <a class="btn-small" href="#download" data-i18n="platforms.web.cta">Открыть веб-версию</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="download">
-    <div class="download-box">
-      <h2 data-i18n="download.title">Начните вести журнал сделок</h2>
-      <p data-i18n="download.subtitle">Бесплатно. Регистрация занимает менее минуты. Данные хранятся в персональном аккаунте.</p>
-      <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.2/Trading.Journal.Setup.1.0.2.exe" style="font-size:16px; padding:16px 32px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v13m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
-        <span data-i18n="download.cta">Скачать Trading Journal</span>
-      </a>
-      <div class="req" data-i18n="download.req">Windows 10/11 · 64-bit · ~120 МБ</div>
-    </div>
-  </section>
-
-  <footer>
-    <div data-i18n-html="footer.copyright">© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a></div>
-    <div data-i18n="footer.tagline">Программное обеспечение для системного учёта торговых операций</div>
-  </footer>
-
-  <script>
-    // Signature candlestick chart
-    const candlesEl = document.getElementById('candles');
-    const heights = [40,65,50,80,35,90,55,70,45,100,60,75,85,50,95];
-    heights.forEach((h, i) => {
-      const el = document.createElement('div');
-      const isBull = Math.random() > 0.4;
-      el.className = 'candle ' + (isBull ? 'bull' : 'bear');
-      el.style.height = h + 'px';
-      el.style.animationDelay = (i * 0.045) + 's';
-      candlesEl.appendChild(el);
+  function setLang(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (LANG[lang][key]) el.textContent = LANG[lang][key];
     });
-
-    // ---------- i18n ----------
-    const LANG = {
-      ru: {
-        'nav.features': 'Возможности', 'nav.platforms': 'Платформы', 'nav.download': 'Скачать',
-        'hero.eyebrow': '// автоматизированная система учёта сделок',
-        'hero.h1': 'Загрузите скриншот сделки — получите готовую <span class="accent">статистику</span>.',
-        'hero.lede': 'Приложение распознаёт данные со скриншотов TradingView, MetaTrader и брокерских платформ с помощью искусственного интеллекта и автоматически формирует статистику по вашим сделкам.',
-        'hero.cta': 'Скачать для Windows', 'hero.ctaNote': 'Версия 1.0 · Бесплатно',
-        'chart.pair': 'XAUUSD · Покупка', 'chart.winrate': 'Винрейт: 64%', 'chart.recognized': '● Распознано ИИ за 2.1 с',
-        'features.eyebrow': 'возможности', 'features.title': 'Инструменты для системного учёта сделок',
-        'features.subtitle': 'Меньше времени на ручной ввод данных — больше внимания анализу торговых решений.',
-        'features.f1.title': 'Распознавание скриншотов',
-        'features.f1.desc': 'Искусственный интеллект автоматически определяет инструмент, цену входа и выхода, объём и финансовый результат сделки. Перед сохранением данные можно скорректировать.',
-        'features.f2.title': 'Автоматическая статистика',
-        'features.f2.desc': 'Винрейт, совокупный результат, количество прибыльных и убыточных сделок, график доходности по дням — рассчитывается автоматически при добавлении каждой сделки.',
-        'features.f3.title': 'Синхронизация между устройствами',
-        'features.f3.desc': 'Единый аккаунт для мобильного приложения, компьютера и браузера. Данные обновляются на всех устройствах одновременно.',
-        'platforms.eyebrow': 'платформы', 'platforms.title': 'Единый аккаунт для всех устройств',
-        'platforms.windows.title': 'Windows', 'platforms.windows.desc': 'Установочный файл для настольных компьютеров', 'platforms.windows.cta': 'Скачать .exe',
-        'platforms.mobile.title': 'iOS и Android', 'platforms.mobile.desc': 'Мобильное приложение для добавления сделок', 'platforms.mobile.cta': 'Скоро в App Store',
-        'platforms.web.title': 'Браузер', 'platforms.web.desc': 'Работает без установки', 'platforms.web.cta': 'Открыть веб-версию',
-        'download.title': 'Начните вести журнал сделок',
-        'download.subtitle': 'Бесплатно. Регистрация занимает менее минуты. Данные хранятся в персональном аккаунте.',
-        'download.cta': 'Скачать Trading Journal', 'download.req': 'Windows 10/11 · 64-bit · ~120 МБ',
-        'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a>', 'footer.tagline': 'Программное обеспечение для системного учёта торговых операций',
-      },
-      en: {
-        'nav.features': 'Features', 'nav.platforms': 'Platforms', 'nav.download': 'Download',
-        'hero.eyebrow': '// automated trade journaling system',
-        'hero.h1': 'Upload a trade screenshot — get instant <span class="accent">statistics</span>.',
-        'hero.lede': 'The application uses artificial intelligence to read trade data from TradingView, MetaTrader and broker screenshots, and automatically builds statistics for every trade.',
-        'hero.cta': 'Download for Windows', 'hero.ctaNote': 'Version 1.0 · Free',
-        'chart.pair': 'XAUUSD · Buy', 'chart.winrate': 'Win rate: 64%', 'chart.recognized': '● Recognized by AI in 2.1s',
-        'features.eyebrow': 'capabilities', 'features.title': 'Tools for systematic trade journaling',
-        'features.subtitle': 'Spend less time on manual data entry and more time analyzing your trading decisions.',
-        'features.f1.title': 'Screenshot recognition',
-        'features.f1.desc': 'Artificial intelligence automatically identifies the instrument, entry and exit price, volume and P&L. Every field can be adjusted before saving.',
-        'features.f2.title': 'Automatic statistics',
-        'features.f2.desc': 'Win rate, total P&L, number of winning and losing trades, and a daily P&L chart are calculated automatically as trades are added.',
-        'features.f3.title': 'Cross-device sync',
-        'features.f3.desc': 'One account for mobile, desktop and browser. Data updates across all devices simultaneously.',
-        'platforms.eyebrow': 'platforms', 'platforms.title': 'One account, every device',
-        'platforms.windows.title': 'Windows', 'platforms.windows.desc': 'Installer for desktop computers', 'platforms.windows.cta': 'Download .exe',
-        'platforms.mobile.title': 'iOS & Android', 'platforms.mobile.desc': 'Mobile app for logging trades on the go', 'platforms.mobile.cta': 'Coming to the App Store',
-        'platforms.web.title': 'Browser', 'platforms.web.desc': 'No installation required', 'platforms.web.cta': 'Open web version',
-        'download.title': 'Start journaling your trades',
-        'download.subtitle': 'Free. Sign-up takes under a minute. Your data is stored in a personal account.',
-        'download.cta': 'Download Trading Journal', 'download.req': 'Windows 10/11 · 64-bit · ~120 MB',
-        'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. All rights reserved. <a href="privacy.html">Privacy Policy</a>', 'footer.tagline': 'Software for systematic trading record-keeping',
-      },
-      es: {
-        'nav.features': 'Funciones', 'nav.platforms': 'Plataformas', 'nav.download': 'Descargar',
-        'hero.eyebrow': '// sistema automatizado de registro de operaciones',
-        'hero.h1': 'Sube una captura de tu operación — obtén <span class="accent">estadísticas</span> al instante.',
-        'hero.lede': 'La aplicación utiliza inteligencia artificial para leer los datos de las capturas de TradingView, MetaTrader y brokers, y genera estadísticas automáticamente para cada operación.',
-        'hero.cta': 'Descargar para Windows', 'hero.ctaNote': 'Versión 1.0 · Gratis',
-        'chart.pair': 'XAUUSD · Compra', 'chart.winrate': 'Winrate: 64%', 'chart.recognized': '● Reconocido por IA en 2.1 s',
-        'features.eyebrow': 'funciones', 'features.title': 'Herramientas para un registro sistemático de operaciones',
-        'features.subtitle': 'Menos tiempo introduciendo datos manualmente, más tiempo analizando tus decisiones de trading.',
-        'features.f1.title': 'Reconocimiento de capturas',
-        'features.f1.desc': 'La inteligencia artificial identifica automáticamente el instrumento, precios de entrada y salida, volumen y resultado. Cada campo puede ajustarse antes de guardar.',
-        'features.f2.title': 'Estadísticas automáticas',
-        'features.f2.desc': 'Winrate, resultado total, operaciones ganadoras y perdedoras, y el gráfico de P&L diario se calculan automáticamente con cada operación añadida.',
-        'features.f3.title': 'Sincronización entre dispositivos',
-        'features.f3.desc': 'Una sola cuenta para móvil, escritorio y navegador. Los datos se actualizan en todos los dispositivos.',
-        'platforms.eyebrow': 'plataformas', 'platforms.title': 'Una cuenta, todos los dispositivos',
-        'platforms.windows.title': 'Windows', 'platforms.windows.desc': 'Instalador para ordenadores de escritorio', 'platforms.windows.cta': 'Descargar .exe',
-        'platforms.mobile.title': 'iOS y Android', 'platforms.mobile.desc': 'Aplicación móvil para registrar operaciones', 'platforms.mobile.cta': 'Próximamente en App Store',
-        'platforms.web.title': 'Navegador', 'platforms.web.desc': 'Sin necesidad de instalación', 'platforms.web.cta': 'Abrir versión web',
-        'download.title': 'Empieza a registrar tus operaciones',
-        'download.subtitle': 'Gratis. El registro toma menos de un minuto. Tus datos se guardan en una cuenta personal.',
-        'download.cta': 'Descargar Trading Journal', 'download.req': 'Windows 10/11 · 64 bits · ~120 MB',
-        'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Todos los derechos reservados. <a href="privacy.html">Política de privacidad</a>', 'footer.tagline': 'Software para el registro sistemático de operaciones de trading',
-      },
-    };
-
-    function setLang(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (LANG[lang][key]) el.textContent = LANG[lang][key];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const key = el.getAttribute('data-i18n-html');
-        if (LANG[lang][key]) el.innerHTML = LANG[lang][key];
-      });
-      document.querySelectorAll('.lang-switch button').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-      });
-      document.documentElement.lang = lang;
-    }
-
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (LANG[lang][key]) el.innerHTML = LANG[lang][key];
+    });
     document.querySelectorAll('.lang-switch button').forEach(btn => {
-      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
-  </script>
+    document.documentElement.lang = lang;
+  }
 
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+  });
+</script>
 </body>
 </html>
