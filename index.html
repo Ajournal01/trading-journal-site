@@ -3,8 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajournal / Trading Journal — журнал сделок для трейдеров</title>
-<meta name="description" content="Ajournal — бесплатный журнал сделок для трейдеров. Загрузите скриншот сделки, и приложение само заполнит журнал и посчитает статистику.">
+<title>Ajournal (Ажурнал) — трейдинг журнал и дневник трейдера</title>
+<meta name="description" content="Ajournal — бесплатный трейдинг журнал: загрузите скриншот сделки, и приложение заполнит дневник трейдера и посчитает статистику.">
+<link rel="canonical" href="https://hsrteer.github.io/trading-journal-site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ajournal">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Ajournal (Ажурнал) — трейдинг журнал и дневник трейдера">
+<meta property="og:description" content="Загрузите скриншот сделки, и Ajournal заполнит журнал и посчитает винрейт, P&amp;L и график по дням. Бесплатно для Windows.">
+<meta property="og:url" content="https://hsrteer.github.io/trading-journal-site/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Ajournal",
+  "alternateName": ["Ажурнал", "Trading Journal", "Ajournal Trading Journal"],
+  "description": "Трейдинг журнал и дневник трейдера: распознаёт сделки со скриншотов и автоматически считает статистику.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "url": "https://hsrteer.github.io/trading-journal-site/",
+  "downloadUrl": "https://github.com/hsrteer/trading-journal-app/releases/latest",
+  "inLanguage": ["ru", "en", "es"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "hsrteer" }
+}
+</script>
 <style>
   :root {
     --bg: #0B0D10;
@@ -56,7 +79,7 @@
   /* hero */
   .hero { padding: 72px 0 64px; max-width: 900px; }
   .eyebrow { color: var(--bull-soft); font-size: 14px; font-weight: 600; }
-  h1 { margin-top: 18px; font-size: clamp(44px, 7vw, 84px); line-height: 1; font-weight: 800; letter-spacing: -0.04em; }
+  h1 { margin-top: 18px; font-size: clamp(38px, 5.8vw, 70px); line-height: 1; font-weight: 800; letter-spacing: -0.04em; }
   .lede { margin-top: 26px; max-width: 560px; font-size: 20px; line-height: 1.55; color: var(--text-dim); }
   .cta-row { margin-top: 34px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .btn {
@@ -95,6 +118,13 @@
   .dl-main .dl-btn { display: inline-block; background: var(--ink); color: #fff; font-weight: 800; padding: 16px 30px; border-radius: 999px; transition: transform 0.15s ease; }
   .dl-main .dl-btn:hover { transform: translateY(-1px); }
 
+
+  /* about / FAQ */
+  .about { max-width: 760px; margin: 0 0 96px; }
+  .about h2 { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -0.03em; line-height: 1.15; }
+  .about p { margin-top: 14px; color: var(--text-dim); line-height: 1.7; font-size: 17px; }
+  .about h3 { margin-top: 30px; font-size: 19px; letter-spacing: -0.01em; }
+
   footer { display: flex; justify-content: space-between; gap: 16px; padding: 0 0 40px; font-size: 13px; color: var(--text-dim); }
   footer a { text-decoration: underline; text-underline-offset: 3px; }
   footer a:hover { color: var(--text); }
@@ -131,8 +161,8 @@
     </nav>
 
     <header class="hero">
-      <div class="eyebrow" data-i18n="hero.eyebrow">Журнал сделок</div>
-      <h1 data-i18n="hero.h1">Скриншот в журнал. За секунды.</h1>
+      <div class="eyebrow" data-i18n="hero.eyebrow">Журнал сделок · дневник трейдера</div>
+      <h1 data-i18n="hero.h1">Трейдинг журнал: из скриншота в статистику</h1>
       <p class="lede" data-i18n="hero.lede">Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.</p>
       <div class="cta-row">
         <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.4/Trading.Journal.Setup.1.0.4.exe" data-i18n="cta">Скачать для Windows</a>
@@ -181,6 +211,17 @@
           <p data-i18n="soon.desc">Один аккаунт на всех устройствах.</p>
         </div>
       </div>
+
+      <section class="about" id="about">
+        <h2 data-i18n="about.title">Ajournal: трейдинг журнал и дневник трейдера</h2>
+        <p data-i18n="about.p1">Ajournal (читается «ажурнал») — бесплатное приложение для Windows: журнал сделок и дневник трейдера, который берёт на себя рутину. Вы загружаете скриншот сделки, ИИ распознаёт инструмент, цены входа и выхода, объём и результат, а винрейт, общий P&amp;L и график доходности по дням считаются автоматически.</p>
+        <h3 data-i18n="faq.q1">Как вести журнал сделок в Ajournal?</h3>
+        <p data-i18n="faq.a1">Откройте вкладку «Добавить», загрузите скриншот сделки (например, из MetaTrader) или введите данные вручную, проверьте заполненные поля и сохраните сделку. Перед сохранением любое значение можно исправить.</p>
+        <h3 data-i18n="faq.q2">Какую статистику показывает дневник трейдера?</h3>
+        <p data-i18n="faq.a2">Винрейт, общий результат, число прибыльных и убыточных сделок, накопительный P&amp;L, график по дням и календарь сделок. Всё обновляется при добавлении новой сделки.</p>
+        <h3 data-i18n="faq.q3">Ajournal бесплатный?</h3>
+        <p data-i18n="faq.a3">Да, сейчас приложение бесплатно. Скачать можно версию для Windows 10 и 11. Мобильное приложение и браузерная версия в планах.</p>
+      </section>
     </main>
 
     <footer>
@@ -194,8 +235,8 @@
 <script>
   const LANG = {
     ru: {
-      'hero.eyebrow': 'Журнал сделок',
-      'hero.h1': 'Скриншот в журнал. За секунды.',
+      'hero.eyebrow': 'Журнал сделок · дневник трейдера',
+      'hero.h1': 'Трейдинг журнал: из скриншота в статистику',
       'hero.lede': 'Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.',
       'cta': 'Скачать для Windows',
       'hero.note': 'Бесплатно · Windows 10/11 · 64-bit',
@@ -208,10 +249,18 @@
       'soon.tag': 'Скоро', 'soon.title': 'iOS, Android и браузер', 'soon.desc': 'Один аккаунт на всех устройствах.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a>',
       'footer.tagline': 'Программное обеспечение для системного учёта торговых операций',
+      'about.title': 'Ajournal: трейдинг журнал и дневник трейдера',
+      'about.p1': 'Ajournal (читается «ажурнал») — бесплатное приложение для Windows: журнал сделок и дневник трейдера, который берёт на себя рутину. Вы загружаете скриншот сделки, ИИ распознаёт инструмент, цены входа и выхода, объём и результат, а винрейт, общий P&L и график доходности по дням считаются автоматически.',
+      'faq.q1': 'Как вести журнал сделок в Ajournal?',
+      'faq.a1': 'Откройте вкладку «Добавить», загрузите скриншот сделки (например, из MetaTrader) или введите данные вручную, проверьте заполненные поля и сохраните сделку. Перед сохранением любое значение можно исправить.',
+      'faq.q2': 'Какую статистику показывает дневник трейдера?',
+      'faq.a2': 'Винрейт, общий результат, число прибыльных и убыточных сделок, накопительный P&L, график по дням и календарь сделок. Всё обновляется при добавлении новой сделки.',
+      'faq.q3': 'Ajournal бесплатный?',
+      'faq.a3': 'Да, сейчас приложение бесплатно. Скачать можно версию для Windows 10 и 11. Мобильное приложение и браузерная версия в планах.',
     },
     en: {
-      'hero.eyebrow': 'Trade journal',
-      'hero.h1': 'Screenshot to journal. In seconds.',
+      'hero.eyebrow': 'Trade journal · trading diary',
+      'hero.h1': 'Trading journal: from screenshot to statistics',
       'hero.lede': 'Ajournal reads the trade from your screenshot and shows how you really trade.',
       'cta': 'Download for Windows',
       'hero.note': 'Free · Windows 10/11 · 64-bit',
@@ -224,10 +273,18 @@
       'soon.tag': 'Coming soon', 'soon.title': 'iOS, Android and browser', 'soon.desc': 'One account on all your devices.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. All rights reserved. <a href="privacy.html">Privacy Policy</a>',
       'footer.tagline': 'Software for systematic trading record-keeping',
+      'about.title': 'Ajournal: a trading journal for your trades',
+      'about.p1': 'Ajournal (pronounced “a-journal”) is a free Windows app that works as a trading journal and trade diary and takes over the routine. You upload a trade screenshot, AI reads the instrument, entry and exit prices, volume and result, and the win rate, total P&L and daily P&L chart are calculated automatically.',
+      'faq.q1': 'How do I keep a trade journal in Ajournal?',
+      'faq.a1': 'Open the Add tab, upload a trade screenshot (for example from MetaTrader) or enter the data manually, check the filled-in fields and save the trade. Any value can be corrected before saving.',
+      'faq.q2': 'What statistics does the trading diary show?',
+      'faq.a2': 'Win rate, total result, number of winning and losing trades, cumulative P&L, a daily chart and a trade calendar. Everything updates when you add a new trade.',
+      'faq.q3': 'Is Ajournal free?',
+      'faq.a3': 'Yes, the app is free right now. You can download the version for Windows 10 and 11. A mobile app and a browser version are planned.',
     },
     es: {
-      'hero.eyebrow': 'Diario de operaciones',
-      'hero.h1': 'De la captura al diario. En segundos.',
+      'hero.eyebrow': 'Diario de operaciones · diario de trading',
+      'hero.h1': 'Diario de trading: de la captura a las estadísticas',
       'hero.lede': 'Ajournal lee la operación de tu captura y muestra cómo operas en realidad.',
       'cta': 'Descargar para Windows',
       'hero.note': 'Gratis · Windows 10/11 · 64 bits',
@@ -240,6 +297,14 @@
       'soon.tag': 'Próximamente', 'soon.title': 'iOS, Android y navegador', 'soon.desc': 'Una sola cuenta en todos tus dispositivos.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Todos los derechos reservados. <a href="privacy.html">Política de privacidad</a>',
       'footer.tagline': 'Software para el registro sistemático de operaciones de trading',
+      'about.title': 'Ajournal: diario de trading para tus operaciones',
+      'about.p1': 'Ajournal (se lee «a-journal») es una aplicación gratuita para Windows que funciona como diario de trading y se encarga de la rutina. Subes una captura de la operación, la IA lee el instrumento, los precios de entrada y salida, el volumen y el resultado, y el winrate, el P&L total y el gráfico diario se calculan automáticamente.',
+      'faq.q1': '¿Cómo llevo un diario de operaciones en Ajournal?',
+      'faq.a1': 'Abre la pestaña Añadir, sube una captura de la operación (por ejemplo de MetaTrader) o introduce los datos manualmente, revisa los campos y guarda la operación. Cualquier valor se puede corregir antes de guardar.',
+      'faq.q2': '¿Qué estadísticas muestra el diario?',
+      'faq.a2': 'Winrate, resultado total, número de operaciones ganadoras y perdedoras, P&L acumulado, gráfico por días y calendario de operaciones. Todo se actualiza al añadir una operación.',
+      'faq.q3': '¿Ajournal es gratis?',
+      'faq.a3': 'Sí, ahora mismo la aplicación es gratuita. Puedes descargar la versión para Windows 10 y 11. Hay una app móvil y una versión web en planes.',
     },
   };
 
