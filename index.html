@@ -94,6 +94,7 @@
     padding: 17px 32px; border-radius: 999px; box-shadow: 0 12px 32px rgba(38,166,154,0.45);
     transition: transform 0.15s ease;
   }
+  .btn-alt { background: transparent; color: var(--text); border: 1px solid var(--glass-line); box-shadow: none; }
   .btn:hover { transform: translateY(-1px); }
   .btn-note { font-size: 13px; color: var(--text-dim); }
 
@@ -172,8 +173,9 @@
       <h1 data-i18n="hero.h1">Трейдинг журнал: из скриншота в статистику</h1>
       <p class="lede" data-i18n="hero.lede">Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.</p>
       <div class="cta-row">
-        <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.5/Trading.Journal.Setup.1.0.5.exe" data-i18n="cta">Скачать для Windows</a>
-        <span class="btn-note" data-i18n="hero.note">Бесплатно · Windows 10/11 · 64-bit</span>
+        <a class="btn" href="/trading-journal-site/app/" data-i18n="webCta">Открыть в браузере</a>
+        <a class="btn btn-alt" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.5/Trading.Journal.Setup.1.0.5.exe" data-i18n="cta">Скачать для Windows</a>
+        <span class="btn-note" data-i18n="hero.note">Бесплатно · браузер и Windows</span>
       </div>
     </header>
 
@@ -213,9 +215,10 @@
           <a class="dl-btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.5/Trading.Journal.Setup.1.0.5.exe" data-i18n="cta">Скачать для Windows</a>
         </div>
         <div class="tile g">
-          <div class="tag"><span data-i18n="soon.tag">Скоро</span></div>
-          <h3 data-i18n="soon.title">iOS, Android и браузер</h3>
-          <p data-i18n="soon.desc">Один аккаунт на всех устройствах.</p>
+          <div class="tag"><span data-i18n="soon.tag">Браузерная версия</span></div>
+          <h3 data-i18n="soon.title">Ajournal прямо на сайте</h3>
+          <p data-i18n="soon.desc">Ведите журнал сделок прямо на сайте.</p>
+          <a class="dl-btn" href="/trading-journal-site/app/" data-i18n="webCta">Открыть в браузере</a>
         </div>
       </div>
 
@@ -227,7 +230,7 @@
         <h3 data-i18n="faq.q2">Какую статистику показывает дневник трейдера?</h3>
         <p data-i18n="faq.a2">Винрейт, общий результат, число прибыльных и убыточных сделок, накопительный P&amp;L, график по дням и календарь сделок. Всё обновляется при добавлении новой сделки.</p>
         <h3 data-i18n="faq.q3">Ajournal бесплатный?</h3>
-        <p data-i18n="faq.a3">Да, сейчас приложение бесплатно. Скачать можно версию для Windows 10 и 11. Мобильное приложение и браузерная версия в планах.</p>
+        <p data-i18n="faq.a3">Да, Ajournal бесплатный. Журнал доступен в браузере и как приложение для Windows 10 и 11.</p>
       </section>
     </main>
 
@@ -246,14 +249,15 @@
       'hero.h1': 'Трейдинг журнал: из скриншота в статистику',
       'hero.lede': 'Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.',
       'cta': 'Скачать для Windows',
-      'hero.note': 'Бесплатно · Windows 10/11 · 64-bit',
+      'webCta': 'Открыть в браузере',
+      'hero.note': 'Бесплатно · браузер и Windows',
       'f1.tag': 'Распознавание', 'sample': 'Пример', 'sample2': 'Пример',
       'f1.title': 'ИИ заполняет сделку за вас',
       'row.instrument': 'Инструмент', 'row.direction': 'Направление', 'row.buy': 'Покупка', 'row.result': 'Результат', 'row.source': 'Источник', 'row.screenshot': 'Скриншот',
       'f2.tag': 'Статистика', 'f2.title': 'Винрейт и график по дням', 'f2.note': 'считается сам с каждой сделкой',
       'f3.tag': 'Аккаунт', 'f3.title': 'Всё в одном месте', 'f3.desc': 'Сделки хранятся в личном аккаунте и не теряются при переустановке.',
       'dl.title': 'Начните вести журнал', 'dl.sub': 'Бесплатно. Windows 10/11 · 64-bit.',
-      'soon.tag': 'Скоро', 'soon.title': 'iOS, Android и браузер', 'soon.desc': 'Один аккаунт на всех устройствах.',
+      'soon.tag': 'Браузерная версия', 'soon.title': 'Ajournal прямо на сайте', 'soon.desc': 'Ведите журнал сделок в браузере.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Все права защищены. <a href="privacy.html">Политика конфиденциальности</a>',
       'footer.tagline': 'Программное обеспечение для системного учёта торговых операций',
       'about.title': 'Ajournal: трейдинг журнал и дневник трейдера',
@@ -263,21 +267,22 @@
       'faq.q2': 'Какую статистику показывает дневник трейдера?',
       'faq.a2': 'Винрейт, общий результат, число прибыльных и убыточных сделок, накопительный P&L, график по дням и календарь сделок. Всё обновляется при добавлении новой сделки.',
       'faq.q3': 'Ajournal бесплатный?',
-      'faq.a3': 'Да, сейчас приложение бесплатно. Скачать можно версию для Windows 10 и 11. Мобильное приложение и браузерная версия в планах.',
+      'faq.a3': 'Да, Ajournal бесплатный. Журнал доступен в браузере и как приложение для Windows 10 и 11.',
     },
     en: {
       'hero.eyebrow': 'Trade journal · trading diary',
       'hero.h1': 'Trading journal: from screenshot to statistics',
       'hero.lede': 'Ajournal reads the trade from your screenshot and shows how you really trade.',
       'cta': 'Download for Windows',
-      'hero.note': 'Free · Windows 10/11 · 64-bit',
+      'webCta': 'Open in browser',
+      'hero.note': 'Free · browser and Windows',
       'f1.tag': 'Recognition', 'sample': 'Example', 'sample2': 'Example',
       'f1.title': 'AI fills in the trade for you',
       'row.instrument': 'Instrument', 'row.direction': 'Direction', 'row.buy': 'Buy', 'row.result': 'Result', 'row.source': 'Source', 'row.screenshot': 'Screenshot',
       'f2.tag': 'Statistics', 'f2.title': 'Win rate and daily chart', 'f2.note': 'calculated automatically with every trade',
       'f3.tag': 'Account', 'f3.title': 'Everything in one place', 'f3.desc': 'Your trades are stored in a personal account and are not lost when you reinstall.',
       'dl.title': 'Start journaling', 'dl.sub': 'Free. Windows 10/11 · 64-bit.',
-      'soon.tag': 'Coming soon', 'soon.title': 'iOS, Android and browser', 'soon.desc': 'One account on all your devices.',
+      'soon.tag': 'Browser version', 'soon.title': 'Ajournal on this website', 'soon.desc': 'Keep your trade journal in the browser.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. All rights reserved. <a href="privacy.html">Privacy Policy</a>',
       'footer.tagline': 'Software for systematic trading record-keeping',
       'about.title': 'Ajournal: a trading journal for your trades',
@@ -287,21 +292,22 @@
       'faq.q2': 'What statistics does the trading diary show?',
       'faq.a2': 'Win rate, total result, number of winning and losing trades, cumulative P&L, a daily chart and a trade calendar. Everything updates when you add a new trade.',
       'faq.q3': 'Is Ajournal free?',
-      'faq.a3': 'Yes, the app is free right now. You can download the version for Windows 10 and 11. A mobile app and a browser version are planned.',
+      'faq.a3': 'Yes, Ajournal is free. Use the journal in your browser or download the app for Windows 10 and 11.',
     },
     es: {
       'hero.eyebrow': 'Diario de operaciones · diario de trading',
       'hero.h1': 'Diario de trading: de la captura a las estadísticas',
       'hero.lede': 'Ajournal lee la operación de tu captura y muestra cómo operas en realidad.',
       'cta': 'Descargar para Windows',
-      'hero.note': 'Gratis · Windows 10/11 · 64 bits',
+      'webCta': 'Abrir en el navegador',
+      'hero.note': 'Gratis · navegador y Windows',
       'f1.tag': 'Reconocimiento', 'sample': 'Ejemplo', 'sample2': 'Ejemplo',
       'f1.title': 'La IA rellena la operación por ti',
       'row.instrument': 'Instrumento', 'row.direction': 'Dirección', 'row.buy': 'Compra', 'row.result': 'Resultado', 'row.source': 'Origen', 'row.screenshot': 'Captura',
       'f2.tag': 'Estadísticas', 'f2.title': 'Winrate y gráfico diario', 'f2.note': 'se calcula solo con cada operación',
       'f3.tag': 'Cuenta', 'f3.title': 'Todo en un solo lugar', 'f3.desc': 'Tus operaciones se guardan en una cuenta personal y no se pierden al reinstalar.',
       'dl.title': 'Empieza a registrar', 'dl.sub': 'Gratis. Windows 10/11 · 64 bits.',
-      'soon.tag': 'Próximamente', 'soon.title': 'iOS, Android y navegador', 'soon.desc': 'Una sola cuenta en todos tus dispositivos.',
+      'soon.tag': 'Versión web', 'soon.title': 'Ajournal en este sitio', 'soon.desc': 'Lleva tu diario de trading en el navegador.',
       'footer.copyright': '© 2026 hsrteer. Ajournal / Trading Journal. Todos los derechos reservados. <a href="privacy.html">Política de privacidad</a>',
       'footer.tagline': 'Software para el registro sistemático de operaciones de trading',
       'about.title': 'Ajournal: diario de trading para tus operaciones',
@@ -311,7 +317,7 @@
       'faq.q2': '¿Qué estadísticas muestra el diario?',
       'faq.a2': 'Winrate, resultado total, número de operaciones ganadoras y perdedoras, P&L acumulado, gráfico por días y calendario de operaciones. Todo se actualiza al añadir una operación.',
       'faq.q3': '¿Ajournal es gratis?',
-      'faq.a3': 'Sí, ahora mismo la aplicación es gratuita. Puedes descargar la versión para Windows 10 y 11. Hay una app móvil y una versión web en planes.',
+      'faq.a3': 'Sí, Ajournal es gratis. Usa el diario en el navegador o descarga la aplicación para Windows 10 y 11.',
     },
   };
 
