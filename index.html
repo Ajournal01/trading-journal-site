@@ -94,8 +94,15 @@
     padding: 17px 32px; border-radius: 999px; box-shadow: 0 12px 32px rgba(38,166,154,0.45);
     transition: transform 0.15s ease;
   }
-  .btn-alt { background: transparent; color: var(--text); border: 1px solid var(--glass-line); box-shadow: none; }
+  .btn-alt {
+    background: rgba(255,255,255,0.08); color: var(--text);
+    border: 1px solid rgba(255,255,255,0.24);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
   .btn:hover { transform: translateY(-1px); }
+  .btn-alt:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.38); }
   .btn-note { font-size: 13px; color: var(--text-dim); }
 
   /* bento */
@@ -123,7 +130,10 @@
   .dl-main { border-radius: 36px; padding: 44px; background: var(--bull); color: var(--ink); }
   .dl-main h2 { font-size: clamp(28px, 4vw, 38px); letter-spacing: -0.03em; line-height: 1.1; }
   .dl-main p { margin: 10px 0 26px; }
-  .dl-main .dl-btn { display: inline-block; background: var(--ink); color: #fff; font-weight: 800; padding: 16px 30px; border-radius: 999px; transition: transform 0.15s ease; }
+  .dl-btn { display: inline-flex; align-items: center; margin-top: 20px; padding: 12px 22px; border-radius: 999px; font-weight: 700; transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease; }
+  .tile .dl-btn { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid rgba(255,255,255,0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }
+  .tile .dl-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.38); }
+  .dl-main .dl-btn { display: inline-block; margin-top: 0; background: var(--ink); color: #fff; border: 0; box-shadow: none; font-weight: 800; padding: 16px 30px; }
   .dl-main .dl-btn:hover { transform: translateY(-1px); }
 
 
@@ -173,8 +183,8 @@
       <h1 data-i18n="hero.h1">Трейдинг журнал: из скриншота в статистику</h1>
       <p class="lede" data-i18n="hero.lede">Ajournal сам читает сделку со скриншота и показывает, как вы торгуете на самом деле.</p>
       <div class="cta-row">
-        <a class="btn" href="/trading-journal-site/app/" data-i18n="webCta">Открыть в браузере</a>
-        <a class="btn btn-alt" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.5/Trading.Journal.Setup.1.0.5.exe" data-i18n="cta">Скачать для Windows</a>
+        <a class="btn" href="https://github.com/hsrteer/trading-journal-app/releases/download/v1.0.5/Trading.Journal.Setup.1.0.5.exe" data-i18n="cta">Скачать для Windows</a>
+        <a class="btn btn-alt" href="/trading-journal-site/app/" data-i18n="webCta">Открыть в браузере</a>
         <span class="btn-note" data-i18n="hero.note">Бесплатно · браузер и Windows</span>
       </div>
     </header>
